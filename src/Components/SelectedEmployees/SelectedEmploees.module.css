@@ -1,0 +1,37 @@
+.container{
+    padding: 5px 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    right: 0;
+    overflow: auto;
+    margin-top: 5px;
+    text-align: center;
+    border: 1px solid #808080;
+    width: 240px;
+    background: #e2d9cc;
+}
+h5{
+    margin: 0 0 0 0;
+    border-bottom: gray 2px solid;
+}
+ button{
+    text-align:center;
+    font-size:13px;
+    font-weight: 700;
+    padding: 3px 6px;
+    background: #eaeef1;
+    display:block;
+    width:90px;
+    margin: 20px auto;
+    border-radius: 3px;
+    color: rgb(45, 53, 241);
+    text-shadow: 0 1px 1px rgba(255,255,255,.7);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.2), inset 0 1px 2px rgba(255,255,255,.7);
+}
+
+button:hover, a.butt.hover {
+    background: #fff;
+}
+
