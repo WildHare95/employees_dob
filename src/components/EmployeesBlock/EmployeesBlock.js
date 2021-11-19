@@ -1,12 +1,14 @@
 import { useEffect } from "react"
-import RadioButton from "../RadioButton/RadioButton"
-import sortHelper from "../../common/sorting/SortingHelper"
-import styles from "./Employees.module.css"
+import { getEmployeesByAlphabet } from "../../common/helpers/employees-helper"
+import EmployeesByLetter from "../EmployeesByLetter/EmployeesByLetter"
+import { EMPLOYEES_ACTIVITY_LOCAL_STORAGE_KEY } from "../../common/constants"
 
 const EmployeesBlock = ({
     employees,
-    getDataEmployees,
+    employeesActivity,
 
+    getDataEmployees,
+    setOneEmployeeActivity,
     setLocalStorageData,
     deleteLocalStorageData,
 }) => {
@@ -14,33 +16,28 @@ const EmployeesBlock = ({
         getDataEmployees()
     }, [getDataEmployees])
 
-    console.log(employees)
+    useEffect(() => {
+        if (Object.keys(employeesActivity).length) {
+            localStorage.setItem(
+                EMPLOYEES_ACTIVITY_LOCAL_STORAGE_KEY,
+                JSON.stringify(employeesActivity)
+            )
+        }
+    }, [employeesActivity])
 
     return (
         <>
             {employees === undefined && "loader"}
             {employees === null && <div>There is an error</div>}
             {employees &&
-                employees.map((item) => {
+                getEmployeesByAlphabet(employees).map((item) => {
                     return (
-                        <div className={styles.listContainer} key={item.letter}>
-                            <h3>{item.letter}</h3>
-                            {item.arr.length !== 0 ? (
-                                <div>
-                                    <RadioButton
-                                        item={item.arr}
-                                        setLocalStorageData={
-                                            setLocalStorageData
-                                        }
-                                        deleteLocalStorageData={
-                                            deleteLocalStorageData
-                                        }
-                                    />
-                                </div>
-                            ) : (
-                                <div>No employees</div>
-                            )}
-                        </div>
+                        <EmployeesByLetter
+                            key={item.letter}
+                            data={item}
+                            employeesActivity={employeesActivity}
+                            setOneEmployeeActivity={setOneEmployeeActivity}
+                        />
                     )
                 })}
         </>

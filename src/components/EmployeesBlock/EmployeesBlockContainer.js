@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import {
     deleteElementLocalStorageData,
     getDataEmployees,
+    setOneEmployeeActivity,
     setElementLocalStorageData,
 } from "../../redux/employees-reducer"
 import EmployeesBlock from "./EmployeesBlock"
@@ -10,7 +11,7 @@ import EmployeesBlock from "./EmployeesBlock"
 const mapStateToProps = (state) => {
     return {
         employees: state.dataState.employees,
-        alphabet: state.dataState.alphabet,
+        employeesActivity: state.dataState.employeesActivity,
         localStorageData: state.dataState.localStorage,
     }
 }
@@ -20,5 +21,6 @@ export default compose(
         getDataEmployees,
         setLocalStorageData: setElementLocalStorageData,
         deleteLocalStorageData: deleteElementLocalStorageData,
+        setOneEmployeeActivity,
     })
 )(EmployeesBlock)

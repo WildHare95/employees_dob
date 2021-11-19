@@ -1,6 +1,6 @@
-import styles from "./App.module.css";
-import EmployeesBlockContainer from "./Components/EmployeesBlock/EmployeesBlockContainer";
-import SelectedEmployeesContainer from "./Components/SelectedEmployees/SelectedEmployeesContainer";
+import styles from "./App.module.css"
+import EmployeesBlockContainer from "./components/EmployeesBlock/EmployeesBlockContainer"
+import SelectedEmployeesContainer from "./components/SelectedEmployees/SelectedEmployeesContainer"
 
 function App() {
     return (
@@ -8,12 +8,12 @@ function App() {
             <h1>EMPLOYEES</h1>
             <div className={styles.App}>
                 <div className={styles.tableContainer}>
-                    <EmployeesBlockContainer/>
+                    <EmployeesBlockContainer />
                 </div>
-                <SelectedEmployeesContainer/>
+                <SelectedEmployeesContainer />
             </div>
         </div>
     )
 }
 
-export default App;
+export default App
