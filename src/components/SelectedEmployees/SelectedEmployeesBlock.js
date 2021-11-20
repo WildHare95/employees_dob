@@ -1,6 +1,6 @@
 const SelectedEmployeesBlock = ({ sortData }) => {
     return sortData.map((item) => (
-        <div>
+        <div key={item.id}>
             <span>
                 {item.lastName} {item.firstName}
             </span>

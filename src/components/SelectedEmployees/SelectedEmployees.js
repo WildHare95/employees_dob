@@ -10,24 +10,27 @@ const SelectedEmployees = ({
     return (
         <div className={styles.container}>
             <h3>Employees birthday</h3>
-            {employees && employees.length !== 0 ? (
+            {(employees &&
+                employees.filter((a) => employeesActivity[a.id]).length !== 0 &&
                 getEmployeesByMonth(
                     employees.filter((a) => employeesActivity[a.id])
                 ).map((item) => {
                     if (item.arr.length !== 0) {
                         return (
-                            <div>
+                            <div key={item.month}>
                                 <h5>{item.month}</h5>
                                 <SelectedEmployeesBlock sortData={item.arr} />
                             </div>
                         )
                     }
-                })
-            ) : (
-                <div>Employees List is empty</div>
-            )}
+                    return undefined
+                })) || <div>Employees List is empty</div>}
             <button
-                disabled={!employees || employees.length === 0}
+                disabled={
+                    employees &&
+                    employees.filter((a) => employeesActivity[a.id]).length ===
+                        0
+                }
                 onClick={setAllEmployeesUnActive}
             >
                 Remove all

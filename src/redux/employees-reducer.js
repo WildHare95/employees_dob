@@ -2,9 +2,6 @@ import { employeesAPI } from "../api/api"
 import { sortEmployeesByAlphabet } from "../common/helpers/employees-helper"
 import { EMPLOYEES_ACTIVITY_LOCAL_STORAGE_KEY } from "../common/constants"
 
-const SET_DATA_STATISTICS = "SET_DATA_STATISTICS"
-const CHANGE_DATA_LOCAL_STORAGE = "CHANGE_DATA_LOCAL_STORAGE"
-
 const SET_EMPLOYEES = "SET_EMPLOYEES"
 const SET_EMPLOYEES_ACTIVITY = "SET_EMPLOYEES_ACTIVITY"
 const SET_ONE_EMPLOYEE_ACTIVITY = "SET_ONE_EMPLOYEE_ACTIVITY"
@@ -12,11 +9,6 @@ const SET_ALL_EMPLOYEES_UN_ACTIVE = "SET_ALL_EMPLOYEES_UN_ACTIVE"
 
 /*Declaring a general data structure with default values*/
 const initialState = {
-    dataEmployees: [],
-    localStorage: [],
-    filterArr: [],
-    isLoaded: false, //delete this
-
     /**
      * undefined - not loaded
      * null - some error
@@ -70,28 +62,10 @@ const dataState = (state = initialState, action) => {
                     {}
                 ),
             }
-
-        case SET_DATA_STATISTICS:
-            return {
-                ...state,
-                dataEmployees: action.data,
-                isLoaded: true,
-            }
-        case CHANGE_DATA_LOCAL_STORAGE:
-            return {
-                ...state,
-                localStorage: action.data,
-            }
         default:
             return state
     }
 }
-
-const setDataEmployees = (data) => ({ type: SET_DATA_STATISTICS, data: data })
-const changeDataFromLocalStorage = (data) => ({
-    type: CHANGE_DATA_LOCAL_STORAGE,
-    data: data,
-})
 
 const setEmployees = (data) => ({ type: SET_EMPLOYEES, payload: data })
 
@@ -145,47 +119,5 @@ export const getDataEmployees = () => async (dispatch) => {
         setEmployees(null)
     }
 }
-
-export const setElementLocalStorageData = (data) => (dispatch) => {
-    if (data.length !== 0) {
-        let existingEntries = JSON.parse(localStorage.getItem("employees"))
-        if (existingEntries == null) existingEntries = []
-        existingEntries = existingEntries.filter((item) => item.id !== data.id)
-        existingEntries.push(data)
-        localStorage.setItem("employees", JSON.stringify(existingEntries))
-        dispatch(
-            changeDataFromLocalStorage(
-                JSON.parse(localStorage.getItem("employees"))
-            )
-        )
-    }
-}
-
-export const deleteElementLocalStorageData = (data) => (dispatch) => {
-    if (data.length !== 0) {
-        let existingEntries = JSON.parse(localStorage.getItem("employees"))
-        if (existingEntries == null) existingEntries = []
-        existingEntries = existingEntries.filter((item) => item.id !== data.id)
-        localStorage.setItem("employees", JSON.stringify(existingEntries))
-        dispatch(
-            changeDataFromLocalStorage(
-                JSON.parse(localStorage.getItem("employees"))
-            )
-        )
-    }
-}
-
-export const removeAllElementsLocalStorage =
-    (data = []) =>
-    (dispatch) => {
-        localStorage.clear()
-        dispatch(changeDataFromLocalStorage(data))
-    }
-
-/*
-
-                localStorage.setItem(`${data.firstName}`, JSON.stringify(data))
-        dispatch(setDataFromLocalStorage(JSON.parse(localStorage.getItem(`${data.firstName}`))))
-    }*/
 
 export default dataState

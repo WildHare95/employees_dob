@@ -4,33 +4,31 @@ const Employee = ({ data, active, onActivityChange }) => {
     return (
         <div>
             <div className={styles.info}>
-                <span>
+                <span className={active ? styles.employeesColor : undefined}>
                     {data.firstName} {data.lastName}
                 </span>
             </div>
             <div>
-                <label>
-                    <input
-                        type="radio"
-                        name={data.id}
-                        onChange={() => {
-                            onActivityChange(true)
-                        }}
-                        checked={active}
-                    />
-                    active
-                </label>
-                <lable>
-                    <input
-                        type="radio"
-                        name={data.id}
-                        onChange={() => {
-                            onActivityChange(false)
-                        }}
-                        checked={!active}
-                    />
-                    not active
-                </lable>
+                <input
+                    type="radio"
+                    name={data.id}
+                    onChange={() => {
+                        onActivityChange(true)
+                    }}
+                    value=" "
+                    checked={active}
+                />
+                active
+                <input
+                    type="radio"
+                    name={data.id}
+                    onChange={() => {
+                        onActivityChange(false)
+                    }}
+                    value=" "
+                    checked={!active}
+                />
+                not active
             </div>
         </div>
     )

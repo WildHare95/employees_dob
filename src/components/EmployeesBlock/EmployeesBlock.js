@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { getEmployeesByAlphabet } from "../../common/helpers/employees-helper"
 import EmployeesByLetter from "../EmployeesByLetter/EmployeesByLetter"
 import { EMPLOYEES_ACTIVITY_LOCAL_STORAGE_KEY } from "../../common/constants"
+import Preloader from "../../common/preloader/Preloader"
 
 const EmployeesBlock = ({
     employees,
@@ -9,8 +10,6 @@ const EmployeesBlock = ({
 
     getDataEmployees,
     setOneEmployeeActivity,
-    setLocalStorageData,
-    deleteLocalStorageData,
 }) => {
     useEffect(() => {
         getDataEmployees()
@@ -27,7 +26,7 @@ const EmployeesBlock = ({
 
     return (
         <>
-            {employees === undefined && "loader"}
+            {employees === undefined && <Preloader />}
             {employees === null && <div>There is an error</div>}
             {employees &&
                 getEmployeesByAlphabet(employees).map((item) => {
@@ -45,37 +44,3 @@ const EmployeesBlock = ({
 }
 
 export default EmployeesBlock
-
-/*
-<div>
-    <div>{item.letter}</div>
-    <span>
-                                    <span>{item.firstName}</span>
-                                    <span> </span>
-                                    <span>{item.lastName}</span>
-                                    <input type="radio"/>
-                                    <label htmlFor="">active</label>
-                                    <input type="radio"/>
-                                    <label htmlFor="">no active</label>
-                                </span>
-</div>
-*/
-
-/*                    if (Array.isArray(item) && item.length > 0)
-{
-    return item.map(person => (
-        <div>
-                                <span>
-                                    <span>{person.firstName}</span>
-                                    <span> </span>
-                                    <span>{person.lastName}</span>
-                                    <input type="radio"/>
-                                    <label htmlFor="">active</label>
-                                    <input type="radio"/>
-                                    <label htmlFor="">no active</label>
-                                </span>
-
-        </div>
-    ))
-}
-*/
