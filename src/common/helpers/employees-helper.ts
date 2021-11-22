@@ -1,6 +1,7 @@
 import { ALPHABET, MONTHS_NAMES } from "../constants"
+import { EmployeeType } from "../../redux/employees-reducer"
 
-export const sortEmployeesByAlphabet = (data) => {
+export const sortEmployeesByAlphabet = (data: EmployeeType[]) => {
     return data
         .slice()
         .sort((a, b) =>
@@ -8,7 +9,7 @@ export const sortEmployeesByAlphabet = (data) => {
         )
 }
 
-export const getEmployeesByAlphabet = (data) => {
+export const getEmployeesByAlphabet = (data: EmployeeType[]) => {
     return ALPHABET.map((letter) => {
         return {
             letter,
@@ -19,7 +20,7 @@ export const getEmployeesByAlphabet = (data) => {
     })
 }
 
-export const getEmployeesByMonth = (data) => {
+export const getEmployeesByMonth = (data: EmployeeType[]) => {
     const dataCopy = data
         .slice()
         .sort((a, b) =>

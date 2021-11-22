@@ -1,4 +1,4 @@
-export const ALPHABET = [
+export const ALPHABET: string[] = [
     "A",
     "B",
     "C",
@@ -27,7 +27,7 @@ export const ALPHABET = [
     "Z",
 ]
 
-export const MONTHS_NAMES = [
+export const MONTHS_NAMES: string[] = [
     "Jan",
     "Feb",
     "Mar",

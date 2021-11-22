@@ -1,6 +1,14 @@
 import styles from "./Employee.module.css"
+import { EmployeeType } from "../../redux/employees-reducer"
+import { FC } from "react"
 
-const Employee = ({ data, active, onActivityChange }) => {
+type PropsType = {
+    data: EmployeeType
+    active: boolean
+    onActivityChange: (state: boolean) => void
+}
+
+const Employee: FC<PropsType> = ({ data, active, onActivityChange }) => {
     return (
         <div>
             <div className={styles.info}>
@@ -15,7 +23,7 @@ const Employee = ({ data, active, onActivityChange }) => {
                     onChange={() => {
                         onActivityChange(true)
                     }}
-                    value=" "
+                    value="active"
                     checked={active}
                 />
                 active
@@ -25,7 +33,7 @@ const Employee = ({ data, active, onActivityChange }) => {
                     onChange={() => {
                         onActivityChange(false)
                     }}
-                    value=" "
+                    value="unactive"
                     checked={!active}
                 />
                 not active

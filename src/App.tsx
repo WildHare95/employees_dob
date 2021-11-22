@@ -1,8 +1,9 @@
 import styles from "./App.module.css"
 import EmployeesBlockContainer from "./components/EmployeesBlock/EmployeesBlockContainer"
 import SelectedEmployeesContainer from "./components/SelectedEmployees/SelectedEmployeesContainer"
+import { FC } from "react"
 
-function App() {
+const App: FC = () => {
     return (
         <div>
             <h1>EMPLOYEES</h1>

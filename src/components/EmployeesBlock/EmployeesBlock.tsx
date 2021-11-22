@@ -1,10 +1,13 @@
-import { useEffect } from "react"
+import { FC, useEffect } from "react"
 import { getEmployeesByAlphabet } from "../../common/helpers/employees-helper"
 import EmployeesByLetter from "../EmployeesByLetter/EmployeesByLetter"
 import { EMPLOYEES_ACTIVITY_LOCAL_STORAGE_KEY } from "../../common/constants"
 import Preloader from "../../common/preloader/Preloader"
+import { EmployeesBlockContainerProps } from "./EmployeesBlockContainer"
 
-const EmployeesBlock = ({
+type PropsType = EmployeesBlockContainerProps
+
+const EmployeesBlock: FC<PropsType> = ({
     employees,
     employeesActivity,
 

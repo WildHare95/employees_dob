@@ -1,14 +1,33 @@
 import { employeesAPI } from "../api/api"
 import { sortEmployeesByAlphabet } from "../common/helpers/employees-helper"
 import { EMPLOYEES_ACTIVITY_LOCAL_STORAGE_KEY } from "../common/constants"
+import { Dispatch } from "redux"
 
-const SET_EMPLOYEES = "SET_EMPLOYEES"
-const SET_EMPLOYEES_ACTIVITY = "SET_EMPLOYEES_ACTIVITY"
-const SET_ONE_EMPLOYEE_ACTIVITY = "SET_ONE_EMPLOYEE_ACTIVITY"
-const SET_ALL_EMPLOYEES_UN_ACTIVE = "SET_ALL_EMPLOYEES_UN_ACTIVE"
+const SET_EMPLOYEES = "SET_EMPLOYEES" as const
+const SET_EMPLOYEES_ACTIVITY = "SET_EMPLOYEES_ACTIVITY" as const
+const SET_ONE_EMPLOYEE_ACTIVITY = "SET_ONE_EMPLOYEE_ACTIVITY" as const
+const SET_ALL_EMPLOYEES_UN_ACTIVE = "SET_ALL_EMPLOYEES_UN_ACTIVE" as const
+
+export type EmployeeType = {
+    id: string
+    firstName: string
+    lastName: string
+    dob: string
+}
+
+export type EmployeesType = EmployeeType[] | null | undefined
+
+export type EmployeesActivityType = {
+    [employeesId: string]: boolean
+}
+
+type InitialStateType = {
+    employees: EmployeesType
+    employeesActivity: EmployeesActivityType
+}
 
 /*Declaring a general data structure with default values*/
-const initialState = {
+let initialState: InitialStateType = {
     /**
      * undefined - not loaded
      * null - some error
@@ -30,7 +49,10 @@ const initialState = {
     employeesActivity: {},
 }
 
-const dataState = (state = initialState, action) => {
+const dataState = (
+    state = initialState,
+    action: ActionType
+): InitialStateType => {
     switch (action.type) {
         case SET_EMPLOYEES:
             return {
@@ -54,7 +76,7 @@ const dataState = (state = initialState, action) => {
             return {
                 ...state,
                 employeesActivity: Object.keys(state.employeesActivity).reduce(
-                    (accum, employeeId) => {
+                    (accum: EmployeesActivityType, employeeId: string) => {
                         accum[employeeId] = false
 
                         return accum
@@ -67,22 +89,41 @@ const dataState = (state = initialState, action) => {
     }
 }
 
-const setEmployees = (data) => ({ type: SET_EMPLOYEES, payload: data })
+type EmployeesTypeAction = ReturnType<typeof setEmployees>
 
-const setEmployeesActivity = (data) => ({
+const setEmployees = (data: EmployeeType[] | null) => ({
+    type: SET_EMPLOYEES,
+    payload: data,
+})
+
+type EmployeesActivityActionType = ReturnType<typeof setEmployeesActivity>
+
+const setEmployeesActivity = (data: EmployeesActivityType) => ({
     type: SET_EMPLOYEES_ACTIVITY,
     payload: data,
 })
 
-export const setOneEmployeeActivity = (employeeId, state) => ({
+type OneEmployeeActivityType = ReturnType<typeof setOneEmployeeActivity>
+export const setOneEmployeeActivity = (employeeId: string, state: boolean) => ({
     type: SET_ONE_EMPLOYEE_ACTIVITY,
     payload: { employeeId, state },
 })
+
+type AllEmployeesUnActiveType = ReturnType<typeof setAllEmployeesUnActive>
+
 export const setAllEmployeesUnActive = () => ({
     type: SET_ALL_EMPLOYEES_UN_ACTIVE,
 })
 
-export const getDataEmployees = () => async (dispatch) => {
+type ActionType =
+    | AllEmployeesUnActiveType
+    | OneEmployeeActivityType
+    | EmployeesActivityActionType
+    | EmployeesTypeAction
+
+type DispatchType = Dispatch<ActionType>
+
+export const getDataEmployees = () => async (dispatch: DispatchType) => {
     try {
         // Success
         const res = await employeesAPI.getEmployeesData()
@@ -102,7 +143,7 @@ export const getDataEmployees = () => async (dispatch) => {
             employeesActivityLocalStorageString &&
             JSON.parse(employeesActivityLocalStorageString)
 
-        employeesActivity = res.data.reduce((accum, item) => {
+        employeesActivity = res.data.reduce((accum: any, item: any) => {
             const employeeId = item.id
 
             // Merge employeesActivity from localStorage with employees from server

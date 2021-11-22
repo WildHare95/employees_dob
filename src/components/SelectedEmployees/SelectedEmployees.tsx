@@ -1,8 +1,16 @@
 import SelectedEmployeesBlock from "./SelectedEmployeesBlock"
 import styles from "./SelectedEmploees.module.css"
 import { getEmployeesByMonth } from "../../common/helpers/employees-helper"
+import {
+    EmployeesActivityType,
+    EmployeesType,
+} from "../../redux/employees-reducer"
+import { FC } from "react"
+import { SelectedEmployeesContainerProps } from "./SelectedEmployeesContainer"
 
-const SelectedEmployees = ({
+type PropsType = SelectedEmployeesContainerProps
+
+const SelectedEmployees: FC<PropsType> = ({
     employees,
     employeesActivity,
     setAllEmployeesUnActive,
@@ -27,9 +35,10 @@ const SelectedEmployees = ({
                 })) || <div>Employees List is empty</div>}
             <button
                 disabled={
-                    employees &&
-                    employees.filter((a) => employeesActivity[a.id]).length ===
-                        0
+                    employees
+                        ? employees.filter((a) => employeesActivity[a.id])
+                              .length === 0
+                        : false
                 }
                 onClick={setAllEmployeesUnActive}
             >
