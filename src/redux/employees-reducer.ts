@@ -91,7 +91,7 @@ const dataState = (
 
 type EmployeesTypeAction = ReturnType<typeof setEmployees>
 
-const setEmployees = (data: EmployeeType[] | null) => ({
+const setEmployees = (data: EmployeesType) => ({
     type: SET_EMPLOYEES,
     payload: data,
 })
@@ -143,21 +143,24 @@ export const getDataEmployees = () => async (dispatch: DispatchType) => {
             employeesActivityLocalStorageString &&
             JSON.parse(employeesActivityLocalStorageString)
 
-        employeesActivity = res.data.reduce((accum: any, item: any) => {
-            const employeeId = item.id
+        employeesActivity = res.data.reduce(
+            (accum: EmployeesActivityType, item: EmployeeType) => {
+                const employeeId = item.id
 
-            // Merge employeesActivity from localStorage with employees from server
-            accum[employeeId] = employeesActivityLocalStorage
-                ? employeesActivityLocalStorage[employeeId] || false
-                : false
+                // Merge employeesActivity from localStorage with employees from server
+                accum[employeeId] = employeesActivityLocalStorage
+                    ? employeesActivityLocalStorage[employeeId] || false
+                    : false
 
-            return accum
-        }, {})
+                return accum
+            },
+            {}
+        )
 
         dispatch(setEmployeesActivity(employeesActivity))
     } catch (e) {
         // Error
-        setEmployees(null)
+        dispatch(setEmployees(null))
     }
 }
 

@@ -1,10 +1,6 @@
 import SelectedEmployeesBlock from "./SelectedEmployeesBlock"
 import styles from "./SelectedEmploees.module.css"
 import { getEmployeesByMonth } from "../../common/helpers/employees-helper"
-import {
-    EmployeesActivityType,
-    EmployeesType,
-} from "../../redux/employees-reducer"
 import { FC } from "react"
 import { SelectedEmployeesContainerProps } from "./SelectedEmployeesContainer"
 
